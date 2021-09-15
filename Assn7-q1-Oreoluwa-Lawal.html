@@ -1,0 +1,89 @@
+<!--/********************************************************************************* * 
+ITC5202 – Assignment 7 * I declare that this assignment is my own work in accordance with Humber Academic Policy. 
+* No part of this assignment has been copied manually or electronically from any other source 
+* (including web sites) or distributed to other students. * * 
+Name: Oreoluwa Lawal     Student ID: N01452264    Date: 7/26/2021* 
+*******************************************************************************/-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> ITC5202 - Week10 </title>
+    <style>
+        body {
+            background-image: url("weather1.jpg");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            color: white;
+            margin: auto;
+        }
+        div{
+            text-align: center;
+            margin-top: 50px;
+        }
+        button{
+            width: 200px;
+            height: 80px;
+            font-size: large;
+        }
+        #demo {
+            margin-top: 50px;
+           
+        }
+       
+    </style>
+</head>
+
+<body>
+    <div>
+    <button onclick="toronto()" id="tor">Toronto</button>
+    <button onclick="oakville()" id="oak">Oakville</button>
+</div>
+    <p id="demo">
+
+    </p>
+
+    <script>
+        function toronto() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myFunction(this);
+                }
+            };
+            xhttp.open("GET", "https://api.openweathermap.org/data/2.5/weather?q=Toronto&appid=080485865c50ffdccb28ebb2c3e06b2c&units=metric&lang=fr", true);
+            xhttp.send();
+        }
+        function oakville() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myFunction(this);
+                }
+            };
+            xhttp.open("GET", "https://api.openweathermap.org/data/2.5/weather?q=Oakville&appid=080485865c50ffdccb28ebb2c3e06b2c&units=metric&lang=fr", true);
+            xhttp.send();
+        }
+        function myFunction(json) {
+            var jsonDoc = json.responseText;
+            var myObj = JSON.parse(jsonDoc);
+            console.log(myObj);
+
+            var output = "";
+
+            output += "<h1 style='padding-left: 600px;font-weight: bold'>" + (myObj.name).toUpperCase() + "</h1><hr/>"
+            output += "<div style='font-size: 38px;  font-style: italic;'><p>Humidity: " + Math.round((myObj.main.humidity), 2) + "% </p>"
+            output += "<p>Temperature: " + Math.round((myObj.main.temp), 2) + "&#8451</p>"
+            output += "<p>Wind Speed: " + myObj.wind.speed + " m/s</p>";
+            output += "<p>Weather Description: " + myObj.weather[0].description + "</p></div>";
+            document.getElementById("demo").innerHTML = output;
+        }
+
+    </script>
+
+</body>
+
+</html>
